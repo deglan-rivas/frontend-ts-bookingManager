@@ -1,4 +1,22 @@
-export default function PatientForm() {
+import { Patient } from "@/types"
+import { ChangeEvent, Dispatch, FormEvent, SetStateAction } from "react"
+
+interface PatientFormProps {
+  savePatient: (data: Patient) => void
+  patient: Patient
+  setPatient: Dispatch<SetStateAction<Patient>>
+}
+
+export default function PatientForm({ savePatient, patient, setPatient }: PatientFormProps) {
+  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault()
+    savePatient(patient)
+  }
+
+  function handleChange(e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) {
+    setPatient({ ...patient, [e.target.id]: e.target.value })
+  }
+
   return (
     <div
       className="px-4 space-y-5 col-span-2
@@ -17,6 +35,7 @@ export default function PatientForm() {
 
       <form
         className="bg-white shadow-md rounded-lg py-10 px-5 space-y-5"
+        onSubmit={(e) => handleSubmit(e)}
       >
         <div className="space-y-2">
           <label htmlFor="name" className="text-sm uppercase font-semibold">
@@ -25,6 +44,8 @@ export default function PatientForm() {
           <input type="text" id="name"
             className="block border border-gray-200 px-3 py-3 rounded-md w-full bg-gray-50"
             placeholder="Nombre del Paciente"
+            onChange={(e) => handleChange(e)}
+            value={patient.name}
           />
         </div>
 
@@ -35,6 +56,8 @@ export default function PatientForm() {
           <input type="text" id="owner"
             className="block border border-gray-200 px-3 py-3 rounded-md w-full bg-gray-50"
             placeholder="Nombre del Propietario"
+            onChange={(e) => handleChange(e)}
+            value={patient.owner}
           />
         </div>
 
@@ -45,6 +68,8 @@ export default function PatientForm() {
           <input type="text" id="email"
             className="block border border-gray-200 px-3 py-3 rounded-md w-full bg-gray-50"
             placeholder="Email de Registro"
+            onChange={(e) => handleChange(e)}
+            value={patient.email}
           />
         </div>
 
@@ -54,17 +79,21 @@ export default function PatientForm() {
           </label>
           <input type="date" id="date"
             className="block border border-gray-200 px-3 py-3 rounded-md w-full bg-gray-50"
+            onChange={(e) => handleChange(e)}
+            value={patient.date}
           />
         </div>
 
         <div className="space-y-2">
-          <label htmlFor="synthomps" className="text-sm uppercase font-semibold">
+          <label htmlFor="symptoms" className="text-sm uppercase font-semibold">
             Síntomas
           </label>
-          {/* <textarea name="synthomps" id="synthomps" cols="10" rows="10" */}
-          <textarea name="synthomps" id="synthomps"
+          {/* <textarea name="symptoms" id="symptoms" cols="10" rows="10" */}
+          <textarea name="symptoms" id="symptoms"
             className="block border border-gray-200 px-3 py-3 rounded-md w-full bg-gray-50"
             placeholder="Síntomas del paciente"
+            onChange={(e) => handleChange(e)}
+            value={patient.symptoms}
           >
           </textarea>
         </div>
