@@ -1,24 +1,11 @@
 import { Patient } from "@/types"
 
-const patientList: Patient[] = [
-  {
-    id: "1",
-    name: "Paciente 1",
-    owner: "Owner 1",
-    date: "2022-01-01",
-    symptoms: "Sintomas 1"
-  },
-  {
-    id: "2",
-    name: "Paciente 2",
-    owner: "Owner 2",
-    date: "2022-02-02",
-    symptoms: "Sintomas 2"
-  }
-]
-
 interface PatientItemProps {
   patient: Patient
+}
+
+interface PatientListProps {
+  patients: Patient[]
 }
 
 function PatientItem({ patient }: PatientItemProps) {
@@ -47,6 +34,13 @@ function PatientItem({ patient }: PatientItemProps) {
         </p>
 
         <p className="text-sm uppercase font-semibold">
+          Email: {""}
+          <span className="font-normal normal-case">
+            {patient.email}
+          </span>
+        </p>
+
+        <p className="text-sm uppercase font-semibold">
           Fecha alta: {""}
           <span className="font-normal normal-case">
             {patient.date}
@@ -61,18 +55,18 @@ function PatientItem({ patient }: PatientItemProps) {
         </p>
       </div>
 
-      <button className="bg-indigo-600 w-full rounded-md text-center py-2 uppercase text-white hover:bg-indigo-700">
+      <button className="bg-indigo-600 w-full rounded-md text-center py-2 uppercase text-white font-semibold hover:bg-indigo-700">
         Editar
       </button>
 
-      <button className="bg-rose-600 w-full rounded-md text-center py-2 uppercase text-white hover:bg-rose-700">
+      <button className="bg-rose-600 w-full rounded-md text-center py-2 uppercase text-white  font-semibold hover:bg-rose-700">
         Editar
       </button>
     </li>
   )
 }
 
-export default function PatientList() {
+export default function PatientList({ patients }: PatientListProps) {
   return (
     <div
       className="px-4 space-y-5 col-span-2
@@ -91,7 +85,7 @@ export default function PatientList() {
 
       <ul className="space-y-5">
         {
-          patientList.map(patient => (
+          patients.map(patient => (
             <PatientItem
               key={patient.id}
               patient={patient}
