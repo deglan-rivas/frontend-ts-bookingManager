@@ -1,4 +1,5 @@
 import PatientForm from "./components/PatientForm"
+import PatientList from "./components/PatientList"
 
 function App() {
 
@@ -11,8 +12,9 @@ function App() {
         </span>
       </h1>
 
-      <div className="grid grid-cols-2">
+      <div className="grid grid-cols-2 gap-5 md:gap-0">
         <PatientForm />
+        <PatientList />
       </div>
     </main>
   )
