@@ -44,7 +44,8 @@ function App() {
       return
     }
 
-    // setPatients(patients.map(p => p.id === patient.id ? patient : p))
+    setPatients(patients.map(p => p.id === patient.id ? patient : p))
+    setPatient(initialPatient)
   }
 
   return (
@@ -65,6 +66,7 @@ function App() {
         <PatientList
           patients={patients}
           deletePatient={deletePatient}
+          setPatient={setPatient}
         />
       </div>
     </main>

@@ -1,16 +1,19 @@
 import { Patient } from "@/types"
+import { Dispatch, SetStateAction } from "react"
 
 interface PatientItemProps {
   patient: Patient
   deletePatient: (id: Patient['id']) => void
+  setPatient: Dispatch<SetStateAction<Patient>>
 }
 
 interface PatientListProps {
   patients: Patient[]
   deletePatient: (id: Patient['id']) => void
+  setPatient: Dispatch<SetStateAction<Patient>>
 }
 
-function PatientItem({ patient, deletePatient }: PatientItemProps) {
+function PatientItem({ patient, deletePatient, setPatient }: PatientItemProps) {
   return (
     <li className="px-5 py-10 bg-white shadow-md rounded-xl space-y-3">
       <div className="space-y-3 mb-2">
@@ -57,7 +60,9 @@ function PatientItem({ patient, deletePatient }: PatientItemProps) {
         </p>
       </div>
 
-      <button className="bg-indigo-600 w-full rounded-md text-center py-2 uppercase text-white font-semibold hover:bg-indigo-700">
+      <button className="bg-indigo-600 w-full rounded-md text-center py-2 uppercase text-white font-semibold hover:bg-indigo-700"
+        onClick={() => setPatient(patient)}
+      >
         Editar
       </button>
 
@@ -70,7 +75,7 @@ function PatientItem({ patient, deletePatient }: PatientItemProps) {
   )
 }
 
-export default function PatientList({ patients, deletePatient }: PatientListProps) {
+export default function PatientList({ patients, deletePatient, setPatient }: PatientListProps) {
   return (
     <div
       className="px-4 space-y-5 col-span-2
@@ -110,6 +115,7 @@ export default function PatientList({ patients, deletePatient }: PatientListProp
                     key={patient.id}
                     patient={patient}
                     deletePatient={deletePatient}
+                    setPatient={setPatient}
                   />
                 ))
               }
