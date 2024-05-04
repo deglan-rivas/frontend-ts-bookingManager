@@ -100,7 +100,7 @@ export default function PatientForm({ savePatient, patient, setPatient }: Patien
 
         <input type="submit"
           className="py-2 bg-indigo-700 text-white uppercase font-semibold text-center w-full rounded-md cursor-pointer hover:bg-indigo-800"
-          value={"Guardar Paciente"}
+          value={!patient.id ? "Agregar Paciente" : "Actualizar Paciente"}
         />
       </form>
     </div>
