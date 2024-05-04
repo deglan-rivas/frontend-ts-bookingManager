@@ -76,28 +76,48 @@ export default function PatientList({ patients, deletePatient }: PatientListProp
       className="px-4 space-y-5 col-span-2
       md:col-span-1"
     >
-      <h2 className="text-3xl font-semibold text-center">
-        Listado de Pacientes
-      </h2>
+      {
+        patients.length === 0 ? (
+          <>
+            <h2 className="text-3xl font-semibold text-center">
+              No hay pacientes
+            </h2>
 
-      <p className="text-center text-lg">
-        Administra tus {""}
-        <span className="text-indigo-700 font-semibold">
-          Pacientes y Citas
-        </span>
-      </p>
+            <p className="text-center text-lg">
+              Comienza agregando pacientes {""}
+              <span className="text-indigo-700 font-semibold">
+                y aparecerán en este lugar
+              </span>
+            </p>
+          </>
+        ) : (
+          <>
+            <h2 className="text-3xl font-semibold text-center">
+              Listado de Pacientes
+            </h2>
 
-      <ul className="space-y-5">
-        {
-          patients.map(patient => (
-            <PatientItem
-              key={patient.id}
-              patient={patient}
-              deletePatient={deletePatient}
-            />
-          ))
-        }
-      </ul>
+            <p className="text-center text-lg">
+              Administra tus {""}
+              <span className="text-indigo-700 font-semibold">
+                Pacientes y Citas
+              </span>
+            </p>
+
+            <ul className="space-y-5">
+              {
+                patients.map(patient => (
+                  <PatientItem
+                    key={patient.id}
+                    patient={patient}
+                    deletePatient={deletePatient}
+                  />
+                ))
+              }
+            </ul>
+          </>
+        )
+      }
+
     </div>
   )
 }
