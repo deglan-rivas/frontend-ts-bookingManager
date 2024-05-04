@@ -1,5 +1,7 @@
 import { Patient } from "@/types"
 import { ChangeEvent, Dispatch, FormEvent, SetStateAction } from "react"
+import { ToastDescription } from "./ui/toast"
+import { useToast } from "./ui/use-toast"
 
 interface PatientFormProps {
   savePatient: (data: Patient) => void
@@ -8,9 +10,26 @@ interface PatientFormProps {
 }
 
 export default function PatientForm({ savePatient, patient, setPatient }: PatientFormProps) {
+  const { toast } = useToast()
+
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
     savePatient(patient)
+    toast({
+      className: "",
+      variant: `${!patient.id ? "addedPatient" : "updatedPatient"}`,
+      description: <ToastDescription className="">
+        {!patient.id ? "Paciente Agregado" : "Paciente Actualizado"}
+        {/* <p className="inline-block">
+          Paciente agregado
+        </p> */}
+        {/* <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-app inline-block" viewBox="0 0 16 16">
+          <path d="M11 2a3 3 0 0 1 3 3v6a3 3 0 0 1-3 3H5a3 3 0 0 1-3-3V5a3 3 0 0 1 3-3zM5 1a4 4 0 0 0-4 4v6a4 4 0 0 0 4 4h6a4 4 0 0 0 4-4V5a4 4 0 0 0-4-4z" />
+        </svg> */}
+      </ToastDescription>,
+      // variant: "destructive",
+      // action: <ToastAction altText="Try again">Try again</ToastAction>,
+    })
   }
 
   function handleChange(e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) {

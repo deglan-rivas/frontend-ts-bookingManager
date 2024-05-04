@@ -1,5 +1,6 @@
 import { Patient } from "@/types"
 import { Dispatch, SetStateAction } from "react"
+import { useToast } from "./ui/use-toast"
 
 interface PatientItemProps {
   patient: Patient
@@ -14,6 +15,8 @@ interface PatientListProps {
 }
 
 function PatientItem({ patient, deletePatient, setPatient }: PatientItemProps) {
+  const { toast } = useToast()
+
   return (
     <li className="px-5 py-10 bg-white shadow-md rounded-xl space-y-3">
       <div className="space-y-3 mb-2">
@@ -66,12 +69,19 @@ function PatientItem({ patient, deletePatient, setPatient }: PatientItemProps) {
         Editar
       </button>
 
-      <button className="bg-rose-600 w-full rounded-md text-center py-2 uppercase text-white  font-semibold hover:bg-rose-700"
-        onClick={() => deletePatient(patient.id)}
+      <button className="bg-rose-600 w-full rounded-md text-center py-2 uppercase text-white font-semibold hover:bg-rose-700"
+        onClick={() => {
+          toast({
+            className: "",
+            variant: "destructive",
+            description: "Paciente Eliminado"
+          })
+          deletePatient(patient.id)
+        }}
       >
         Delete
       </button>
-    </li>
+    </li >
   )
 }
 

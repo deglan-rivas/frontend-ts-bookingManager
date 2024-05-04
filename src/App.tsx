@@ -38,8 +38,8 @@ function App() {
   }
 
   return (
-    <main className="max-w-3xl mx-auto py-20">
-      <h1 className="text-5xl text-center font-semibold max-w-xl mx-auto mb-12">
+    <main className="container mx-auto py-20">
+      <h1 className="text-5xl text-center font-semibold md:w-2/3 md:mx-auto mb-12">
         Seguimiento de Pacientes {""}
         <span className="text-indigo-700">
           Veterinaria
@@ -58,6 +58,7 @@ function App() {
           setPatient={setPatient}
         />
       </div>
+
     </main>
   )
 }
