@@ -33,6 +33,10 @@ function App() {
     }
   ])
 
+  function deletePatient(id: Patient['id']) {
+    setPatients(patients.filter(patient => patient.id !== id))
+  }
+
   return (
     <main className="max-w-3xl mx-auto py-20">
       <h1 className="text-5xl text-center font-semibold max-w-xl mx-auto mb-12">
@@ -46,6 +50,7 @@ function App() {
         <PatientForm />
         <PatientList
           patients={patients}
+          deletePatient={deletePatient}
         />
       </div>
     </main>

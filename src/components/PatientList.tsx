@@ -2,13 +2,15 @@ import { Patient } from "@/types"
 
 interface PatientItemProps {
   patient: Patient
+  deletePatient: (id: Patient['id']) => void
 }
 
 interface PatientListProps {
   patients: Patient[]
+  deletePatient: (id: Patient['id']) => void
 }
 
-function PatientItem({ patient }: PatientItemProps) {
+function PatientItem({ patient, deletePatient }: PatientItemProps) {
   return (
     <li className="px-5 py-10 bg-white shadow-md rounded-xl space-y-3">
       <div className="space-y-3 mb-2">
@@ -59,14 +61,16 @@ function PatientItem({ patient }: PatientItemProps) {
         Editar
       </button>
 
-      <button className="bg-rose-600 w-full rounded-md text-center py-2 uppercase text-white  font-semibold hover:bg-rose-700">
-        Editar
+      <button className="bg-rose-600 w-full rounded-md text-center py-2 uppercase text-white  font-semibold hover:bg-rose-700"
+        onClick={() => deletePatient(patient.id)}
+      >
+        Delete
       </button>
     </li>
   )
 }
 
-export default function PatientList({ patients }: PatientListProps) {
+export default function PatientList({ patients, deletePatient }: PatientListProps) {
   return (
     <div
       className="px-4 space-y-5 col-span-2
@@ -89,6 +93,7 @@ export default function PatientList({ patients }: PatientListProps) {
             <PatientItem
               key={patient.id}
               patient={patient}
+              deletePatient={deletePatient}
             />
           ))
         }
