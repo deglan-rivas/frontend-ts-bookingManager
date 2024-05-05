@@ -7,14 +7,34 @@ interface PatientFormProps {
   savePatient: (data: Patient) => void
   patient: Patient
   setPatient: Dispatch<SetStateAction<Patient>>
+  errors: Omit<Patient, "id">
+  setErrors: Dispatch<SetStateAction<Omit<Patient, "id">>>
 }
 
-export default function PatientForm({ savePatient, patient, setPatient }: PatientFormProps) {
+export default function PatientForm({ savePatient, patient, setPatient, errors, setErrors }: PatientFormProps) {
   const { toast } = useToast()
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
+    if (Object.entries(patient).some(p => p[0] !== "id" && !p[1])) {
+      setErrors({
+        name: !patient["name"] ? "El campo Paciente es requerido" : "",
+        owner: !patient["owner"] ? "El campo Propietario es requerido" : "",
+        email: !patient["email"] ? "El campo Email es requerido" : "",
+        date: !patient["date"] ? "El campo Fecha Alta es requerido" : "",
+        symptoms: !patient["symptoms"] ? "El campo Síntomas es requerido" : ""
+      })
+      return
+    }
+
     savePatient(patient)
+    setErrors({
+      name: "",
+      owner: "",
+      email: "",
+      date: "",
+      symptoms: ""
+    })
     toast({
       className: "",
       variant: `${!patient.id ? "addedPatient" : "updatedPatient"}`,
@@ -66,6 +86,10 @@ export default function PatientForm({ savePatient, patient, setPatient }: Patien
             onChange={(e) => handleChange(e)}
             value={patient.name}
           />
+
+          {
+            errors["name"] && <p className="bg-rose-600 w-full py-2 text-center text-white text-sm rounded-md">{errors["name"]}</p>
+          }
         </div>
 
         <div className="space-y-2">
@@ -78,6 +102,10 @@ export default function PatientForm({ savePatient, patient, setPatient }: Patien
             onChange={(e) => handleChange(e)}
             value={patient.owner}
           />
+
+          {
+            errors["owner"] && <p className="bg-rose-600 w-full py-2 text-center text-white text-sm rounded-md">{errors["owner"]}</p>
+          }
         </div>
 
         <div className="space-y-2">
@@ -90,6 +118,10 @@ export default function PatientForm({ savePatient, patient, setPatient }: Patien
             onChange={(e) => handleChange(e)}
             value={patient.email}
           />
+
+          {
+            errors["email"] && <p className="bg-rose-600 w-full py-2 text-center text-white text-sm rounded-md">{errors["email"]}</p>
+          }
         </div>
 
         <div className="space-y-2">
@@ -101,6 +133,10 @@ export default function PatientForm({ savePatient, patient, setPatient }: Patien
             onChange={(e) => handleChange(e)}
             value={patient.date}
           />
+
+          {
+            errors["date"] && <p className="bg-rose-600 w-full py-2 text-center text-white text-sm rounded-md">{errors["date"]}</p>
+          }
         </div>
 
         <div className="space-y-2">
@@ -115,6 +151,10 @@ export default function PatientForm({ savePatient, patient, setPatient }: Patien
             value={patient.symptoms}
           >
           </textarea>
+
+          {
+            errors["symptoms"] && <p className="bg-rose-600 w-full py-2 text-center text-white text-sm rounded-md">{errors["symptoms"]}</p>
+          }
         </div>
 
         <input type="submit"

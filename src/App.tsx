@@ -14,9 +14,18 @@ function App() {
   }
 
   const initialPatients: Patient[] = JSON.parse(localStorage.getItem("patients") || "[]")
+  const initialErrors: Omit<Patient, "id"> = {
+    name: "",
+    owner: "",
+    email: "",
+    date: "",
+    symptoms: ""
+  }
 
   const [patient, setPatient] = useState<Patient>(initialPatient)
   const [patients, setPatients] = useState<Patient[]>(initialPatients)
+  // const errors = useMemo(() => Object.entries(patient).map((p) => !p[1] && p[0] !== "id" ? `El campo ${p[0]} es requerido` : ""), [patient])
+  const [errors, setErrors] = useState<Omit<Patient, "id">>(initialErrors)
 
   useEffect(() => {
     localStorage.setItem("patients", JSON.stringify(patients))
@@ -51,6 +60,8 @@ function App() {
           savePatient={savePatient}
           patient={patient}
           setPatient={setPatient}
+          errors={errors}
+          setErrors={setErrors}
         />
         <PatientList
           patients={patients}
